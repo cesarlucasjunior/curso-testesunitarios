@@ -36,6 +36,10 @@ public class LocacaoServiceTest {
 		Assert.assertEquals(locacao.getValor(), 24.90, 0.01);
 		
 		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), CoreMatchers.is(true));
+		Assert.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
+		Assert.assertNotEquals(locacao.getDataLocacao(), new Date());
+		
+		
 		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),
 				CoreMatchers.is(true));
 		
