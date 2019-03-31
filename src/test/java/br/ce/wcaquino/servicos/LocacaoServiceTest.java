@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
+import org.junit.rules.ExpectedException;
 
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
@@ -17,6 +18,8 @@ public class LocacaoServiceTest {
 
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 	
 	@Test
 	public void testeLocacao() throws Exception {
@@ -62,15 +65,34 @@ public class LocacaoServiceTest {
 		Usuario usuario = new Usuario("César Lucas Júnior");
 		@SuppressWarnings("unused")
 		Usuario usuario2 = new Usuario("César Lucas Júnior");
-		Filme filme = new Filme("Forrest Gump", 1, 24.90);
+		Filme filme = new Filme("Forrest Gump", 0, 24.90);
 		
 		// Ação - executo um método que será o escopo de teste.
 		try {
 			LocacaoService ls = new LocacaoService();
+			@SuppressWarnings("unused")
 			Locacao locacao = ls.alugarFilme(usuario, filme);
 			Assert.fail("Há filme no estoque quando não deveria ter!");
 		} catch (Exception e) {
 			Assert.assertThat(e.getMessage(), CoreMatchers.is("Filme sem estoque!"));
 		}		
+	}
+	
+	@Test
+	public void testeLocacaoSemEstoqueNova() throws Exception {
+		
+		// Cenário - instancia classes necessárias.
+		Usuario usuario = new Usuario("César Lucas Júnior");
+		@SuppressWarnings("unused")
+		Usuario usuario2 = new Usuario("César Lucas Júnior");
+		Filme filme = new Filme("Forrest Gump", 0, 24.90);
+
+		// Ação - executo um método que será o escopo de teste.
+		LocacaoService ls = new LocacaoService();
+		
+		expectedException.expect(Exception.class);
+		expectedException.expectMessage("Filme sem estoque!");	
+		
+		ls.alugarFilme(usuario, filme);
 	}
 }
