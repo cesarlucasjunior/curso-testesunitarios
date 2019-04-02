@@ -5,16 +5,19 @@ import java.util.Date;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.junit.runners.MethodSorters;
 
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LocacaoServiceTest {
 
 	@Rule
@@ -23,6 +26,7 @@ public class LocacaoServiceTest {
 	public ExpectedException expectedException = ExpectedException.none();
 	
 	private LocacaoService ls;
+	
 	
 	@Before
 	public void setup() {
