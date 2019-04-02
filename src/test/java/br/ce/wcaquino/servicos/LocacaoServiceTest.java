@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -21,9 +22,16 @@ public class LocacaoServiceTest {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 	
+	private LocacaoService ls;
+	
+	@Before
+	public void setup() {
+		ls = new LocacaoService();
+	}	
+	
 	@Test
 	public void testeLocacao() throws Exception {
-
+				
 		// Cenário - instancia classes necessárias.
 		Usuario usuario = new Usuario("César Lucas Júnior");
 		@SuppressWarnings("unused")
@@ -31,7 +39,6 @@ public class LocacaoServiceTest {
 		Filme filme = new Filme("Forrest Gump", 3, 24.90);
 
 		// Ação - executo um método que será o escopo de teste.
-		LocacaoService ls = new LocacaoService();
 		Locacao locacao = ls.alugarFilme(usuario, filme);
 		
 		// Validação:
@@ -54,7 +61,6 @@ public class LocacaoServiceTest {
 		Filme filme = new Filme("Forrest Gump", 0, 24.90);
 
 		// Ação - executo um método que será o escopo de teste.
-		LocacaoService ls = new LocacaoService();
 		ls.alugarFilme(usuario, filme);
 	}
 	
@@ -69,7 +75,6 @@ public class LocacaoServiceTest {
 		
 		// Ação - executo um método que será o escopo de teste.
 		try {
-			LocacaoService ls = new LocacaoService();
 			@SuppressWarnings("unused")
 			Locacao locacao = ls.alugarFilme(usuario, filme);
 			Assert.fail("Há filme no estoque quando não deveria ter!");
@@ -87,9 +92,7 @@ public class LocacaoServiceTest {
 		Usuario usuario2 = new Usuario("César Lucas Júnior");
 		Filme filme = new Filme("Forrest Gump", 0, 24.90);
 
-		// Ação - executo um método que será o escopo de teste.
-		LocacaoService ls = new LocacaoService();
-		
+		// Ação - executo um método que será o escopo de teste.		
 		expectedException.expect(Exception.class);
 		expectedException.expectMessage("Filme sem estoque!");	
 		
