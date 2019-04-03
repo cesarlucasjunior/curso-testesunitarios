@@ -1,5 +1,6 @@
 package br.ce.wcaquino.servicos;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.hamcrest.CoreMatchers;
@@ -41,15 +42,20 @@ public class LocacaoServiceTest {
 		@SuppressWarnings("unused")
 		Usuario usuario2 = new Usuario("César Lucas Júnior");
 		Filme filme = new Filme("Forrest Gump", 3, 24.90);
+		Filme filme2 = new Filme("Código da Vinci", 3, 10.00);
+		
+		ArrayList<Filme> filmes = new ArrayList<Filme>();
+		filmes.add(filme);
+		filmes.add(filme2);
 
 		// Ação - executo um método que será o escopo de teste.
-		Locacao locacao = ls.alugarFilme(usuario, filme);
+		Locacao locacao = ls.alugarFilme(usuario, filmes);
 		
 		// Validação:
-		errorCollector.checkThat(locacao.getFilme().getNome(), CoreMatchers.is("Forrest Gump"));
+		errorCollector.checkThat(locacao.getFilme().get(0).getNome(), CoreMatchers.is("Forrest Gump"));
 		errorCollector.checkThat(locacao.getUsuario().getNome(), CoreMatchers.is("César Lucas Júnior"));
 		errorCollector.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), CoreMatchers.is(true));
-		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(24.90));
+		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(34.90));
 		errorCollector.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(new Date(), 1)),
 				CoreMatchers.is(true));
 		
@@ -63,9 +69,15 @@ public class LocacaoServiceTest {
 		@SuppressWarnings("unused")
 		Usuario usuario2 = new Usuario("César Lucas Júnior");
 		Filme filme = new Filme("Forrest Gump", 0, 24.90);
+		Filme filme2 = new Filme("Código da Vinci", 3, 10.00);
+		
+		ArrayList<Filme> filmes = new ArrayList<Filme>();
+		filmes.add(filme);
+		filmes.add(filme2);
+
 
 		// Ação - executo um método que será o escopo de teste.
-		ls.alugarFilme(usuario, filme);
+		ls.alugarFilme(usuario, filmes);
 	}
 	
 	@Test
@@ -76,11 +88,17 @@ public class LocacaoServiceTest {
 		@SuppressWarnings("unused")
 		Usuario usuario2 = new Usuario("César Lucas Júnior");
 		Filme filme = new Filme("Forrest Gump", 0, 24.90);
+		Filme filme2 = new Filme("Código da Vinci", 0, 10.00);
+		
+		ArrayList<Filme> filmes = new ArrayList<Filme>();
+		filmes.add(filme);
+		filmes.add(filme2);
+
 		
 		// Ação - executo um método que será o escopo de teste.
 		try {
 			@SuppressWarnings("unused")
-			Locacao locacao = ls.alugarFilme(usuario, filme);
+			Locacao locacao = ls.alugarFilme(usuario, filmes);
 			Assert.fail("Há filme no estoque quando não deveria ter!");
 		} catch (Exception e) {
 			Assert.assertThat(e.getMessage(), CoreMatchers.is("Filme sem estoque!"));
@@ -95,11 +113,17 @@ public class LocacaoServiceTest {
 		@SuppressWarnings("unused")
 		Usuario usuario2 = new Usuario("César Lucas Júnior");
 		Filme filme = new Filme("Forrest Gump", 0, 24.90);
+		Filme filme2 = new Filme("Código da Vinci", 3, 10.00);
+		
+		ArrayList<Filme> filmes = new ArrayList<Filme>();
+		filmes.add(filme);
+		filmes.add(filme2);
+
 
 		// Ação - executo um método que será o escopo de teste.		
 		expectedException.expect(Exception.class);
 		expectedException.expectMessage("Filme sem estoque!");	
 		
-		ls.alugarFilme(usuario, filme);
+		ls.alugarFilme(usuario, filmes);
 	}
 }
