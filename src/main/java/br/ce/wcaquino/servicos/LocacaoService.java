@@ -18,9 +18,9 @@ public class LocacaoService {
 			if (filme.getEstoque() == 0) {
 				throw new Exception("Filme sem estoque!");
 			}
+			locacao.setValor(filme.getPrecoLocacao());
 		}
 		locacao.setFilme(filmes);
-		locacao.setValor(filmes.get(0).getPrecoLocacao() + filmes.get(1).getPrecoLocacao());
 		
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(new Date());
