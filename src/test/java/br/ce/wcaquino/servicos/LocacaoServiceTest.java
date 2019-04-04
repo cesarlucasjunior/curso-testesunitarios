@@ -10,6 +10,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -193,6 +194,7 @@ public class LocacaoServiceTest {
 	}
 	
 	@Test
+	@Ignore
 	public void naoDevolverFilmeNoDomingo() throws Exception {
 		//cenario
 		Usuario usuario = new Usuario("César Lucas Júnior");
