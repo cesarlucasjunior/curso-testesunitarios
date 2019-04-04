@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -40,6 +40,8 @@ public class LocacaoServiceTest {
 	
 	@Test
 	public void testeLocacao() throws Exception {
+		
+		Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 				
 		// Cenário - instancia classes necessárias.
 		Usuario usuario = new Usuario("César Lucas Júnior");
@@ -194,8 +196,10 @@ public class LocacaoServiceTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void naoDevolverFilmeNoDomingo() throws Exception {
+		
+		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 		//cenario
 		Usuario usuario = new Usuario("César Lucas Júnior");
 		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 3, 33.33));
