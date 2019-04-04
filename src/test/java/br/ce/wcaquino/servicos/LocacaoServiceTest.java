@@ -2,6 +2,7 @@ package br.ce.wcaquino.servicos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -189,5 +190,18 @@ public class LocacaoServiceTest {
 		
 		//verificacao
 		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(35.0));
+	}
+	
+	@Test
+	public void naoDevolverFilmeNoDomingo() throws Exception {
+		//cenario
+		Usuario usuario = new Usuario("César Lucas Júnior");
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 3, 33.33));
+		//acao
+		Locacao locacao = ls.alugarFilme(usuario, filmes);
+		
+		//verificacao
+		boolean hojeESegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+		errorCollector.checkThat(hojeESegunda, CoreMatchers.is(true));
 	}
 }
