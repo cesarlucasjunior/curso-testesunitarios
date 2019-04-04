@@ -13,12 +13,28 @@ public class LocacaoService {
 
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws Exception {
 		Locacao locacao = new Locacao();
+		int qtdFilme = 0;
 		
 		for (Filme filme : filmes) {
 			if (filme.getEstoque() == 0) {
 				throw new Exception("Filme sem estoque!");
 			}
+			
+			qtdFilme++;
+			if(qtdFilme == 3) {
+				filme.setPrecoLocacao(filme.getPrecoLocacao() - (filme.getPrecoLocacao() * 0.25));
+			}			
+			if(qtdFilme == 4) {
+				filme.setPrecoLocacao(filme.getPrecoLocacao() - (filme.getPrecoLocacao() * 0.5));
+			}
+			if(qtdFilme == 5) {
+				filme.setPrecoLocacao(filme.getPrecoLocacao() - (filme.getPrecoLocacao() * 0.75));
+			}
+			if(qtdFilme == 6) {
+				filme.setPrecoLocacao(0d);
+			}
 			locacao.setValor(filme.getPrecoLocacao());
+			
 		}
 		locacao.setFilme(filmes);
 		

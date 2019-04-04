@@ -1,7 +1,9 @@
 package br.ce.wcaquino.servicos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -125,5 +127,67 @@ public class LocacaoServiceTest {
 		expectedException.expectMessage("Filme sem estoque!");	
 		
 		ls.alugarFilme(usuario, filmes);
+	}
+	
+	@Test
+	public void desconto25Pct3Filme() throws Exception {
+		//cenario
+		Usuario u1 = new Usuario("César Lucas Júnior");
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 1, 10.0),
+										   new Filme("Her", 2, 10.0),
+										   new Filme("Rocky", 3, 10.0));
+		//acao	
+		Locacao locacao = ls.alugarFilme(u1, filmes);
+		
+		//verificacao
+		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(27.5));
+	}
+
+	@Test
+	public void desconto50Pct4Filme() throws Exception {
+		//cenario
+		Usuario u1 = new Usuario("César Lucas Júnior");
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 1, 10.0),
+										   new Filme("Her", 2, 10.0),
+										   new Filme("Rocky", 3, 10.0),
+										   new Filme("Pantera Negra", 4, 10.0));
+		//acao	
+		Locacao locacao = ls.alugarFilme(u1, filmes);
+		
+		//verificacao
+		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(32.5));
+	}
+	
+	@Test
+	public void desconto75Pct5Filme() throws Exception {
+		//cenario
+		Usuario u1 = new Usuario("César Lucas Júnior");
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 1, 10.0),
+										   new Filme("Her", 2, 10.0),
+										   new Filme("Rocky", 3, 10.0),
+										   new Filme("Pantera Negra", 4, 10.0),
+										   new Filme("Homem de Ferro", 5, 10.0));
+		//acao	
+		Locacao locacao = ls.alugarFilme(u1, filmes);
+		
+		//verificacao
+		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(35.0));
+	}
+	
+	@Test
+	public void desconto100Pct6Filme() throws Exception {
+		//cenario
+		Usuario u1 = new Usuario("César Lucas Júnior");
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 1, 10.0),
+										   new Filme("Her", 2, 10.0),
+										   new Filme("Rocky", 3, 10.0),
+										   new Filme("Pantera Negra", 4, 10.0),
+										   new Filme("Homem de Ferro", 5, 10.0),
+										   new Filme("Capitão América", 6, 10.0));
+		//acao	
+		Locacao locacao = ls.alugarFilme(u1, filmes);
+		
+		//verificacao
+		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(35.0));
 	}
 }
