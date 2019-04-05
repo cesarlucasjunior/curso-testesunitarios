@@ -1,14 +1,14 @@
 package br.ce.wcaquino.servicos;
 
-import static org.junit.Assert.assertThat;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
@@ -20,6 +20,9 @@ import br.ce.wcaquino.entidades.Usuario;
 
 @RunWith(Parameterized.class)
 public class CalculoValorLocacaoTest {
+	@Rule
+	public ErrorCollector error = new ErrorCollector();
+	
 	@Parameter
 	public List<Filme> filmes;
 	@Parameter(value=1)
@@ -28,8 +31,7 @@ public class CalculoValorLocacaoTest {
 	public LocacaoService ls;
 	
 	@Parameter(value=2)
-	public String cenario;
-	
+	public String cenario;	
 	
 	@Before
 	public void setup() {
@@ -65,6 +67,6 @@ public class CalculoValorLocacaoTest {
 		Locacao locacao = ls.alugarFilme(u1, filmes);
 		
 		//verificacao
-		assertThat(locacao.getValor(), CoreMatchers.is(valorLocacao));
+		error.checkThat(locacao.getValor(), CoreMatchers.is(valorLocacao));
 	}
 }
