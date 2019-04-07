@@ -20,6 +20,8 @@ import org.junit.runners.MethodSorters;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.matchers.DiaSemanaMatcher;
+import br.ce.wcaquino.matchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -209,5 +211,8 @@ public class LocacaoServiceTest {
 		//verificacao
 		boolean hojeESegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
 		errorCollector.checkThat(hojeESegunda, CoreMatchers.is(true));
+		Assert.assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
+		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiNumaSegunda());
 	}
 }

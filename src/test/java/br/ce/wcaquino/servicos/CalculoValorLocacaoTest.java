@@ -63,7 +63,7 @@ public class CalculoValorLocacaoTest {
 		//cenario
 		Usuario u1 = new Usuario("César Lucas Júnior");
 		
-		//acao	
+		//acao
 		Locacao locacao = ls.alugarFilme(u1, filmes);
 		
 		//verificacao
