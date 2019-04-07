@@ -66,6 +66,9 @@ public class LocacaoServiceTest {
 		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(34.90));
 		errorCollector.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(new Date(), 1)),
 				CoreMatchers.is(true));
+		errorCollector.checkThat(locacao.getDataLocacao(), MatchersProprios.ehHoje());
+		errorCollector.checkThat(locacao.getDataRetorno(), MatchersProprios.ehHojeComDiferencaDias(1));
+		
 		
 	}
 	
