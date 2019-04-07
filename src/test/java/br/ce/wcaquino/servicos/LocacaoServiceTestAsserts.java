@@ -33,11 +33,11 @@ public class LocacaoServiceTestAsserts {
 
 		// Validações:
 		Assert.assertTrue(locacao.getValor() == 34.90); //Verifica se a *expressão* retorna true.
-		Assert.assertFalse("Valor locação maior que o esperado!", locacao.getValor() > 24.91);
+		Assert.assertFalse("Valor locação maior que o esperado!", locacao.getValor() > 34.91);
 		Assert.assertTrue(locacao.getUsuario().getNome().contains("Júnior"));
 		Assert.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
 		
-		Assert.assertEquals(24.90, locacao.getValor(), 0.01); //Verifica dois valores com possível variação.
+		Assert.assertEquals(34.90, locacao.getValor(), 0.01); //Verifica dois valores com possível variação.
 		Assert.assertNotEquals(Double.valueOf(24.91), Double.valueOf(locacao.getValor()));
 		
 		//Válido, mas não recomendado -> assertTrue();
@@ -51,7 +51,7 @@ public class LocacaoServiceTestAsserts {
 		//A sacada do assertThat() é utilizar o Matcher que dá outras opções de testes no valor esperado: 
 		Assert.assertThat(locacao.getUsuario().getNome(), CoreMatchers.is("César Lucas Júnior"));
 		//Assert.assertThat(locacao.getFilme().getNome(), CoreMatchers.is("Forrest Gump"));		
-		Assert.assertThat(locacao.getValor(), CoreMatchers.is(CoreMatchers.equalTo(24.90)));
+		Assert.assertThat(locacao.getValor(), CoreMatchers.is(CoreMatchers.equalTo(34.90)));
 		Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),
 				CoreMatchers.is(true));
 	}
