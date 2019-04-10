@@ -17,6 +17,7 @@ import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 import org.junit.runners.MethodSorters;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.UsuarioBuilder;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
@@ -50,8 +51,8 @@ public class LocacaoServiceTestBuilders {
 		@SuppressWarnings("unused")
 		Usuario usuario2 = UsuarioBuilder.umUsuario().agora();
 		
-		Filme filme = new Filme("Forrest Gump", 3, 24.90);
-		Filme filme2 = new Filme("Código da Vinci", 3, 10.00);
+		Filme filme = FilmeBuilder.umFilme().agora();
+		Filme filme2 = FilmeBuilder.umFilme().agora();
 
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		filmes.add(filme);
@@ -64,7 +65,7 @@ public class LocacaoServiceTestBuilders {
 		errorCollector.checkThat(locacao.getFilme().get(0).getNome(), CoreMatchers.is("Forrest Gump"));
 		errorCollector.checkThat(locacao.getUsuario().getNome(), CoreMatchers.is("César Lucas Júnior"));
 		errorCollector.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()), CoreMatchers.is(true));
-		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(34.90));
+		errorCollector.checkThat(locacao.getValor(), CoreMatchers.is(8.0));
 		errorCollector.checkThat(
 				DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(new Date(), 1)),
 				CoreMatchers.is(true));
@@ -80,8 +81,8 @@ public class LocacaoServiceTestBuilders {
 		Usuario usuario = UsuarioBuilder.umUsuario().agora();
 		@SuppressWarnings("unused")
 		Usuario usuario2 = UsuarioBuilder.umUsuario().agora();
-		Filme filme = new Filme("Forrest Gump", 0, 24.90);
-		Filme filme2 = new Filme("Código da Vinci", 3, 10.00);
+		Filme filme = FilmeBuilder.umFilme().comEstoqueParametrizado(0).agora();
+		Filme filme2 = FilmeBuilder.umFilme().agora();
 
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		filmes.add(filme);
@@ -98,8 +99,8 @@ public class LocacaoServiceTestBuilders {
 		Usuario usuario = UsuarioBuilder.umUsuario().agora();
 		@SuppressWarnings("unused")
 		Usuario usuario2 = UsuarioBuilder.umUsuario().agora();
-		Filme filme = new Filme("Forrest Gump", 0, 24.90);
-		Filme filme2 = new Filme("Código da Vinci", 0, 10.00);
+		Filme filme = FilmeBuilder.umFilme().comEstoqueParametrizado(0).agora();
+		Filme filme2 = FilmeBuilder.umFilme().agora();
 
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		filmes.add(filme);
@@ -122,8 +123,9 @@ public class LocacaoServiceTestBuilders {
 		Usuario usuario = UsuarioBuilder.umUsuario().agora();
 		@SuppressWarnings("unused")
 		Usuario usuario2 = UsuarioBuilder.umUsuario().agora();
-		Filme filme = new Filme("Forrest Gump", 0, 24.90);
-		Filme filme2 = new Filme("Código da Vinci", 3, 10.00);
+		
+		Filme filme = FilmeBuilder.umFilme().comEstoqueParametrizado(0).agora();
+		Filme filme2 = FilmeBuilder.umFilme().agora();
 
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		filmes.add(filme);
@@ -143,7 +145,8 @@ public class LocacaoServiceTestBuilders {
 		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 		// cenario
 		Usuario usuario = UsuarioBuilder.umUsuario().agora();
-		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 3, 33.33));
+		
+		List<Filme> filmes = Arrays.asList(FilmeBuilder.umFilme().agora());
 		// acao
 		Locacao locacao = ls.alugarFilme(usuario, filmes);
 
