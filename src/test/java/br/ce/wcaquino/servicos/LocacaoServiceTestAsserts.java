@@ -6,14 +6,26 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTestAsserts {
+	
+	private LocacaoService ls;
+	
+	@Before
+	public void setup() {
+		ls = new LocacaoService();
+		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+		ls.setLocacaoDAO(dao);
+	}
 
 	@Test
 	public void testeLocacao() throws Exception {
@@ -28,7 +40,6 @@ public class LocacaoServiceTestAsserts {
 		filmes.add(filme2);
 
 		// Ação - executo um método que será o escopo de teste.
-		LocacaoService ls = new LocacaoService();
 		Locacao locacao = ls.alugarFilme(usuario, filmes);
 
 		// Validações:
