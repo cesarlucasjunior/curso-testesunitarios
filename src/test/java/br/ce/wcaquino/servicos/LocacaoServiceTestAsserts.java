@@ -25,6 +25,8 @@ public class LocacaoServiceTestAsserts {
 		ls = new LocacaoService();
 		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
 		ls.setLocacaoDAO(dao);
+		SPCService spcService = Mockito.mock(SPCService.class);
+		ls.setSpcService(spcService);
 	}
 
 	@Test

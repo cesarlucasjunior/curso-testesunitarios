@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.mockito.Mock;
+
 import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
@@ -15,7 +17,8 @@ import br.ce.wcaquino.utils.DataUtils;
 public class LocacaoService {
 	
 	private LocacaoDAO dao;	
-
+	private SPCService spcService;
+	
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws Exception {
 		Locacao locacao = new Locacao();
 		int qtdFilme = 0;
@@ -41,6 +44,13 @@ public class LocacaoService {
 			locacao.setValor(filme.getPrecoLocacao());
 			
 		}
+		
+		
+		if(spcService.validaCPF()) {
+			throw new RuntimeException();
+		}
+		
+		
 		locacao.setFilme(filmes);
 		
 		locacao.setUsuario(usuario);
@@ -65,4 +75,7 @@ public class LocacaoService {
 		this.dao = dao;
 	}
 
+	public void setSpcService(SPCService spc) {
+		spcService = spc;
+	}
 }

@@ -43,6 +43,8 @@ public class LocacaoServiceTestBuilders {
 		ls = new LocacaoService();
 		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
 		ls.setLocacaoDAO(dao);
+		SPCService spcService = Mockito.mock(SPCService.class);
+		ls.setSpcService(spcService);
 	}
 
 	@Test
@@ -160,5 +162,15 @@ public class LocacaoServiceTestBuilders {
 		Assert.assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
 		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
 		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiNumaSegunda());
+	}
+	
+	@Test
+	public void naoAlugarParaNegativado() throws Exception {
+		Usuario usuario = UsuarioBuilder.umUsuario().agora();
+		List<Filme> listaFilme = Arrays.asList(FilmeBuilder.umFilme().agora());
+		
+		expectedException.expect(RuntimeException.class);
+		
+		ls.alugarFilme(usuario, listaFilme);
 	}
 }
