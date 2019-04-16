@@ -37,13 +37,14 @@ public class LocacaoServiceTestBuilders {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	private LocacaoService ls;
+	private SPCService spcService;
 
 	@Before
 	public void setup() {
 		ls = new LocacaoService();
 		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
 		ls.setLocacaoDAO(dao);
-		SPCService spcService = Mockito.mock(SPCService.class);
+		spcService = Mockito.mock(SPCService.class);
 		ls.setSpcService(spcService);
 	}
 
@@ -169,8 +170,10 @@ public class LocacaoServiceTestBuilders {
 		Usuario usuario = UsuarioBuilder.umUsuario().agora();
 		List<Filme> listaFilme = Arrays.asList(FilmeBuilder.umFilme().agora());
 		
-		expectedException.expect(RuntimeException.class);
+		Mockito.when(spcService.possuiNegativacao(usuario)).thenReturn(true);
 		
+		expectedException.expect(RuntimeException.class);
+		expectedException.expectMessage("Usuário negativado!");
 		ls.alugarFilme(usuario, listaFilme);
 	}
 }

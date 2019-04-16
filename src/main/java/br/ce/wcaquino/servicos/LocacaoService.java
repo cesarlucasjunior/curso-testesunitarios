@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.mockito.Mock;
-
 import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
@@ -46,8 +44,8 @@ public class LocacaoService {
 		}
 		
 		
-		if(spcService.validaCPF()) {
-			throw new RuntimeException();
+		if(spcService.possuiNegativacao(usuario)) {
+			throw new RuntimeException("Usuário negativado!");
 		}
 		
 		
