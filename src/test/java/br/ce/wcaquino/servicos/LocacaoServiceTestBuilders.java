@@ -180,6 +180,8 @@ public class LocacaoServiceTestBuilders {
 		expectedException.expect(RuntimeException.class);
 		expectedException.expectMessage("Usuário negativado!");
 		ls.alugarFilme(usuario, listaFilme);
+		
+		Mockito.verify(spcService).possuiNegativacao(usuario);
 	}
 	
 	@Test
