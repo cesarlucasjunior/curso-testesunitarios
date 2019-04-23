@@ -65,7 +65,7 @@ public class LocacaoService {
 		locacao.setDataRetorno(dataEntrega);
 		
 		// Salvando a locacao...	
-		dao.salvar();
+		dao.salvar(locacao);
 		
 		return locacao;
 	}
@@ -77,5 +77,15 @@ public class LocacaoService {
 					emailService.notificarAtraso(locacao.getUsuario());
 				}
 			}
+	}
+	
+	public void prorrogarLocacao(Locacao locacaoAntiga, int diasAMais) {
+		Locacao locacao = new Locacao();
+		locacao.setUsuario(locacaoAntiga.getUsuario());
+		locacao.setFilme(locacaoAntiga.getFilme());
+		locacao.setDataLocacao(new Date());
+		locacao.setDataRetorno(DataUtils.obterDataComDiferencaDias(diasAMais));
+		locacao.setValor(locacaoAntiga.getValor()*diasAMais);
+		dao.salvar(locacao);
 	}
 }

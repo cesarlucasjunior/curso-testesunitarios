@@ -6,7 +6,7 @@ import br.ce.wcaquino.entidades.Locacao;
 
 public interface LocacaoDAO {
 
-	public void salvar();
+	public void salvar(Locacao locacao);
 	
 	public List<Locacao> obterLocacoesPendentes();
 }

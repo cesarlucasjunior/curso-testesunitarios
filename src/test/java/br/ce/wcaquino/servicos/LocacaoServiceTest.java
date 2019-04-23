@@ -16,12 +16,14 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 import org.junit.runners.MethodSorters;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.builders.LocacaoBuilder;
 import br.ce.wcaquino.builders.UsuarioBuilder;
 import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
@@ -243,5 +245,21 @@ public class LocacaoServiceTest {
 		
 		//Ação
 		ls.alugarFilme(usuario, listaFilmes);
+	}
+	
+	@Test
+	public void deveProrrogarUmaLocacao() {
+		//Ambiente
+		Locacao locacao = LocacaoBuilder.umaLocacao().agora();	
+		//Ação
+		ls.prorrogarLocacao(locacao, 3);		
+		//Teste
+		ArgumentCaptor<Locacao> argumentCaptor = ArgumentCaptor.forClass(Locacao.class);
+		Mockito.verify(dao).salvar(argumentCaptor.capture());
+		Locacao locacaoCapturada = argumentCaptor.getValue();
+		
+		errorCollector.checkThat("Nome usuário incorreto!", locacaoCapturada.getUsuario().getNome(), CoreMatchers.is("Usuario 1"));
+		errorCollector.checkThat("", locacaoCapturada.getFilme().get(0).getNome(), CoreMatchers.is("Forrest Gump"));
+		errorCollector.checkThat("", locacaoCapturada.getValor(), CoreMatchers.is(12.0));
 	}
 }
