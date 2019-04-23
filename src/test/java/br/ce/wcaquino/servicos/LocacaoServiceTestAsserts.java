@@ -8,7 +8,9 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
@@ -17,16 +19,16 @@ import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTestAsserts {
-	
+	@InjectMocks
 	private LocacaoService ls;
+	@Mock
+	private LocacaoDAO dao;
+	@Mock
+	private SPCService spcService;
 	
 	@Before
 	public void setup() {
-		ls = new LocacaoService();
-		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
-		ls.setLocacaoDAO(dao);
-		SPCService spcService = Mockito.mock(SPCService.class);
-		ls.setSpcService(spcService);
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test

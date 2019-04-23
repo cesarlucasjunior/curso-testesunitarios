@@ -16,7 +16,10 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 import org.junit.runners.MethodSorters;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.LocacaoBuilder;
@@ -36,21 +39,19 @@ public class LocacaoServiceTestBuilders {
 	public ErrorCollector errorCollector = new ErrorCollector();
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
-
+	
+	@InjectMocks
 	private LocacaoService ls;
+	@Mock
 	private SPCService spcService;
+	@Mock
 	private LocacaoDAO dao;
+	@Mock
 	private EmailService email;
 
 	@Before
 	public void setup() {
-		ls = new LocacaoService();
-		dao = Mockito.mock(LocacaoDAO.class);
-		ls.setLocacaoDAO(dao);
-		spcService = Mockito.mock(SPCService.class);
-		ls.setSpcService(spcService);
-		email = Mockito.mock(EmailService.class);
-		ls.setEmailService(email);
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
