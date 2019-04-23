@@ -18,8 +18,11 @@ import org.junit.rules.ExpectedException;
 import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.builders.UsuarioBuilder;
 import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
@@ -225,5 +228,20 @@ public class LocacaoServiceTest {
 		Assert.assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
 		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
 		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiNumaSegunda());
+	}
+	
+	@Test
+	public void deveTratarErroNoSpc() throws Exception{
+		//Ambiente
+		Usuario usuario = UsuarioBuilder.umUsuario().agora();
+		List<Filme> listaFilmes = Arrays.asList(FilmeBuilder.umFilme().agora());
+		
+		Mockito.when(spcService.possuiNegativacao(usuario)).thenThrow(new Exception("Erro no serviço do SPC!"));
+		//Teste
+		expectedException.expect(Exception.class);
+		expectedException.expectMessage("Erro no serviço do SPC!");
+		
+		//Ação
+		ls.alugarFilme(usuario, listaFilmes);
 	}
 }
