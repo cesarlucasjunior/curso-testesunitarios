@@ -29,9 +29,10 @@ public class CalculadoraTest {
 	@Test
 	public void diferencaEntreMockSpy() {
 		Mockito.when(calcMock.somar(1, 2)).thenReturn(8);
+		Mockito.when(calcMock.somar(1, 3)).thenCallRealMethod();
 		Mockito.when(calcSpy.somar(1, 2)).thenReturn(8);
 		
-		System.out.println("Mock: " + calcMock.somar(1, 2));
+		System.out.println("Mock: " + calcMock.somar(1, 3));
 		System.out.println("Spy: " + calcSpy.somar(1, 3));
 	}
 	
