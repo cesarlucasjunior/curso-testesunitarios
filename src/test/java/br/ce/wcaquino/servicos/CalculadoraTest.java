@@ -32,7 +32,7 @@ public class CalculadoraTest {
 		Mockito.when(calcMock.somar(1, 3)).thenCallRealMethod();
 		
 		//Má prática:
-		Mockito.when(calcSpy.somar(1, 2)).thenReturn(8);
+		Mockito.when(calcSpy.somar(1, 2)).thenReturn(5);
 		
 		//Boa prática:
 		Mockito.doReturn(5).when(calcSpy).somar(1, 3);
@@ -41,6 +41,7 @@ public class CalculadoraTest {
 		Mockito.doNothing().when(calcSpy).imprimir();
 		
 		System.out.println("Mock: " + calcMock.somar(1, 3));
+		System.out.println("Mock: " + calcMock.somar(1, 2));
 		System.out.println("Spy: " + calcSpy.somar(1, 3));
 		
 		calcMock.imprimir();
