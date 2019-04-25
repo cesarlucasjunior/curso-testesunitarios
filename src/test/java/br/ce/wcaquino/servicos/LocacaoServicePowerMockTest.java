@@ -1,9 +1,15 @@
 package br.ce.wcaquino.servicos;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +28,8 @@ import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.matchers.DiaSemanaMatcher;
+import br.ce.wcaquino.matchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
 
 @RunWith(PowerMockRunner.class)
@@ -66,6 +74,24 @@ public class LocacaoServicePowerMockTest {
 		errorCollector.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.adicionarDias(new Date(), 1)),
 				CoreMatchers.is(true));
 		//errorCollector.checkThat(locacao.getDataLocacao(), MatchersProprios.ehHoje());
-		//errorCollector.checkThat(locacao.getDataRetorno(), MatchersProprios.ehHojeComDiferencaDias(2));		
+		errorCollector.checkThat(locacao.getDataRetorno(), is(DataUtils.adicionarDias(new Date(), 1)));		
+	}
+	
+	@Test
+	public void naoDevolverFilmeNoDomingo() throws Exception {
+		
+		PowerMockito.whenNew(Date.class).withNoArguments().thenReturn(DataUtils.obterData(27, 04, 2019));
+		//cenario
+		Usuario usuario = new Usuario("César Lucas Júnior");
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 3, 33.33));
+		//acao
+		Locacao locacao = ls.alugarFilme(usuario, filmes);
+		
+		//verificacao
+		boolean hojeESegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(), Calendar.MONDAY);
+		errorCollector.checkThat(hojeESegunda, CoreMatchers.is(true));
+		Assert.assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
+		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiNumaSegunda());
 	}
 }
