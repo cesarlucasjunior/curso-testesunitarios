@@ -56,11 +56,7 @@ public class LocacaoService {
 		locacao.setDataLocacao(new Date());
 		
 		// Entrega no dia seguinte
-		Date dataEntrega = new Date();
-		dataEntrega = adicionarDias(dataEntrega, 1);
-		if(DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {
-			dataEntrega = adicionarDias(dataEntrega, 1);
-		}
+		Date dataEntrega = extrairDataEntrega();
 		
 		locacao.setDataRetorno(dataEntrega);
 		
@@ -68,6 +64,15 @@ public class LocacaoService {
 		dao.salvar(locacao);
 		
 		return locacao;
+	}
+
+	private Date extrairDataEntrega() {
+		Date dataEntrega = new Date();
+		dataEntrega = adicionarDias(dataEntrega, 1);
+		if(DataUtils.verificarDiaSemana(dataEntrega, Calendar.SUNDAY)) {
+			dataEntrega = adicionarDias(dataEntrega, 1);
+		}
+		return dataEntrega;
 	}
 	
 	public void notificarAtraso() {

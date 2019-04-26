@@ -50,6 +50,7 @@ public class LocacaoServicePowerMockTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+		ls = PowerMockito.spy(ls);
 	}	
 	
 	@Test
@@ -93,5 +94,18 @@ public class LocacaoServicePowerMockTest {
 		Assert.assertThat(locacao.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
 		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
 		Assert.assertThat(locacao.getDataRetorno(), MatchersProprios.caiNumaSegunda());
+	}
+	
+	@Test
+	public void deveAlugarFilmeSemExtrairDataEntrega() throws Exception {
+		//Ambiente
+		Usuario usuario = UsuarioBuilder.umUsuario().agora();
+		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 3, 33.33));
+		//Ação
+		Locacao locacao = ls.alugarFilme(usuario, filmes);
+		//Teste
+		PowerMockito.doReturn(DataUtils.obterData(01, 01, 2020)).when(ls, "extrairDataEntrega");
+		
+		PowerMockito.verifyPrivate(ls).invoke("extrairDataEntrega");
 	}
 }
