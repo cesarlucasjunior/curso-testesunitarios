@@ -4,6 +4,9 @@ import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.DAY_OF_WEEK;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.SECOND;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +52,17 @@ public class DataUtils {
 		calendar.set(DAY_OF_MONTH, dia);
 		calendar.set(MONTH, mes - 1);
 		calendar.set(YEAR, ano);
+		return calendar.getTime();
+	}
+	
+	public static Date obterDataComHoraZerada(int dia, int mes, int ano){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(DAY_OF_MONTH, dia);
+		calendar.set(MONTH, mes - 1);
+		calendar.set(YEAR, ano);
+		calendar.set(HOUR_OF_DAY, 00);
+		calendar.set(MINUTE, 00);
+		calendar.set(SECOND, 00);
 		return calendar.getTime();
 	}
 	

@@ -21,6 +21,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.UsuarioBuilder;
@@ -102,10 +103,19 @@ public class LocacaoServicePowerMockTest {
 		Usuario usuario = UsuarioBuilder.umUsuario().agora();
 		List<Filme> filmes = Arrays.asList(new Filme("Forrest Gump", 3, 33.33));
 		//Ação
-		Locacao locacao = ls.alugarFilme(usuario, filmes);
+		ls.alugarFilme(usuario, filmes);
 		//Teste
 		PowerMockito.doReturn(DataUtils.obterData(01, 01, 2020)).when(ls, "extrairDataEntrega");
 		
 		PowerMockito.verifyPrivate(ls).invoke("extrairDataEntrega");
+	}
+	
+	@Test
+	public void extrairDataEntregaTest() throws Exception {
+		//Ação
+		Date dataRetornada = Whitebox.invokeMethod(ls, "extrairDataEntrega");
+		//Teste
+		
+		Assert.assertThat(dataRetornada, CoreMatchers.is(DataUtils.adicionarDias(new Date(), 1)));
 	}
 }
