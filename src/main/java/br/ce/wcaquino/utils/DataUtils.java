@@ -39,14 +39,7 @@ public class DataUtils {
 		return adicionarDias(new Date(), dias);
 	}
 	
-	/**
-	 * Retorna uma instância de <code>Date</code> refletindo os valores passados por parametro
-	 * 
-	 * @param dia
-	 * @param mes
-	 * @param ano
-	 * @return
-	 */
+	
 	public static Date obterData(int dia, int mes, int ano){
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(DAY_OF_MONTH, dia);
@@ -66,14 +59,7 @@ public class DataUtils {
 		return calendar.getTime();
 	}
 	
-	/**
-	 * Verifica se uma data é igual a outra
-	 * 	Esta comparação considera apenas dia, mes e ano
-	 * 
-	 * @param data1
-	 * @param data2
-	 * @return
-	 */
+	
 	public static boolean isMesmaData(Date data1, Date data2) {
 		Calendar calendar1 = Calendar.getInstance();
 		calendar1.setTime(data1);
